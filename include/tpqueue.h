@@ -5,73 +5,61 @@
 template<typename T>
 class TPQueue {
  private:
-  struct ITEM {
-    T data;
-    ITEM * next;
-    ITEM * prev;
-  };
-  ITEM* head, * tail;
-  TPQueue::ITEM* create(const T& value);
+    struct ITEM {
+        T val;
+        ITEM* next;
+        ITEM* prev;
+    };
+  ITEM* head;
+  ITEM* tail;
 
- public:
-  TPQueue():head(nullptr), tail(nullptr) {}
-  void push(const T&);
-  T pop();
-};
-
-template<typename T>
-typename TPQueue<T>::ITEM * TPQueue<T>::create(const T& data) {
-  ITEM * item = new ITEM;
-  item -> data = data;
-  item -> next = nullptr;
-  item -> prev = nullptr;
-  return item;
+    ITEM* create(T val) {
+    ITEM* item = new ITEM;
+    item->val = val;
+    item->next = nullptr;
+    item->prev = nullptr;
+    return item;
 }
 
 
 
 
 template<typename T>
-void TPQueue<T>::push(const T& data) {
-    if (start == nullptr) {
-        start = new ITEM();
-        start->data = data;
-        start->next = nullptr;
-    } else {
-        ITEM *startLocal = nullptr;
-        ITEM *endLocal = nullptr;
-        startLocal = start;
-        while (startLocal != nullptr) {
-            if (startLocal->data.prior < data.prior) {
-                ITEM *temp = new ITEM();
-                temp->data = startLocal->data;
-                temp->next = startLocal->next;
-                startLocal->data = data;
-                startLocal->next = temp;
-                return;
-            }
-            endLocal = startLocal;
-            startLocal = startLocal->next;
-        }
-        ITEM *temp = new ITEM();
-        temp->data = data;
-        temp->next = nullptr;
-        endLocal->next = temp;
-    }
-}
-
-
-template<typename T>
-T TPQueue<T>::pop() {
-  ITEM * temp = head -> next;
-  if (temp) {
-    temp -> prev = nullptr;
+void TPQueue <T>::push(const T& data) {
+  ITEM * temp = head;
+  ITEM * item = create(data);
+  while (temp && temp -> data.prior >= data.prior)
+    temp = temp -> next;
+  if (!temp && head) {
+    tail -> next = item;
+    tail -> next -> prev = tail;
+    tail = item;
+  } else if (!(temp || head)) {
+    head = tail = item;
+  } else if (!temp -> prev) {
+    temp -> prev = item;
+    item -> next = temp;
+    head = item;
+  } else {
+    temp -> prev -> next = item;
+    item -> prev = temp -> prev;
+    item -> next = temp;
+    temp -> prev = item;
   }
-  T data = head -> data;
-  delete head;
-  head = temp;
-  return data;
 }
+
+
+  T pop() {
+    ITEM* cur = head->next;
+    if (cur) {
+      cur->prev = nullptr;
+    }
+    T val = head->val;
+    delete head;
+    head = cur;
+    return val;
+  }
+
 
 
 
