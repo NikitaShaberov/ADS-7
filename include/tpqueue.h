@@ -9,7 +9,7 @@ class TPQueue {
         T value;
         ITEM* next;
         ITEM* last;
-    };
+  };
   ITEM* head;
   ITEM* tail;
 
@@ -23,14 +23,14 @@ class TPQueue {
 
  public:
   T pop() {
-   ITEM* num = head->next;
-   if (num) {
+ ITEM* num = head->next;
+ if (num) {
     num->last = nullptr;
     }
-   T value = head->value;
-   delete head;
-   head = num;
-   return value;
+ T value = head->value;
+ delete head;
+ head = num;
+ return value;
   }
 
 
@@ -57,7 +57,7 @@ class TPQueue {
         item->next = num;
         num->last = item;
       }
-  }  
+  }
 };
 struct SYM {
   char ch;
