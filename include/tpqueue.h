@@ -5,7 +5,7 @@
 template<typename T>
 class TPQueue {
  private:
-    struct ITEM {
+  struct ITEM {
         T value;
         ITEM* next;
         ITEM* last;
@@ -22,16 +22,15 @@ class TPQueue {
 }
 
  public:
-
- T pop() {
-    ITEM* num = head->next;
-    if (num) {
-      num->last = nullptr;
+  T pop() {
+   ITEM* num = head->next;
+   if (num) {
+    num->last = nullptr;
     }
-    T value = head->value;
-    delete head;
-    head = num;
-    return value;
+   T value = head->value;
+   delete head;
+   head = num;
+   return value;
   }
 
 
@@ -58,10 +57,8 @@ class TPQueue {
         item->next = num;
         num->last = item;
       }
-  }
-  
+  }  
 };
-
 struct SYM {
   char ch;
   int prior;
