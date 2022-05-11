@@ -6,60 +6,61 @@ template<typename T>
 class TPQueue {
  private:
     struct ITEM {
-        T val;
+        T num;
         ITEM* next;
         ITEM* prev;
     };
   ITEM* head;
   ITEM* tail;
 
-    ITEM* create(T val) {
+    ITEM* create(T num) {
     ITEM* item = new ITEM;
-    item->val = val;
+    item->num = num;
     item->next = nullptr;
     item->prev = nullptr;
     return item;
 }
 
 
+ public:
 
-
-template<typename T>
-void TPQueue <T>::push(const T& data) {
-  ITEM * temp = head;
-  ITEM * item = create(data);
-  while (temp && temp -> data.prior >= data.prior)
-    temp = temp -> next;
-  if (!temp && head) {
-    tail -> next = item;
-    tail -> next -> prev = tail;
-    tail = item;
-  } else if (!(temp || head)) {
-    head = tail = item;
-  } else if (!temp -> prev) {
-    temp -> prev = item;
-    item -> next = temp;
-    head = item;
-  } else {
-    temp -> prev -> next = item;
-    item -> prev = temp -> prev;
-    item -> next = temp;
-    temp -> prev = item;
-  }
-}
-
-
-  T pop() {
-    ITEM* cur = head->next;
-    if (cur) {
-      cur->prev = nullptr;
+    void push(const T& value) {
+        ITEM* num = head;
+        ITEM* item = create(value);
+        while (num && num->value.prior >= value.prior)
+            num = num->next;
+        if (!num && head) {
+            tail->next = item;
+            tail->next->prev = tail;
+            tail = item;
+        } else if (!num && !head) {
+            head = tail = item;
+        } else if (!num->prev) {
+            num->prev = item;
+            item->next = num;
+            head = item;
+        } else {
+            num->prev->next = item;
+            item->prev = num->prev;
+            item->next = num;
+            num->prev = item;
+        }
     }
-    T val = head->val;
-    delete head;
-    head = cur;
-    return val;
-  }
 
+        T pop() {
+        if (head) {
+            ITEM* num = head->next;
+            if (num)
+                num->prev = nullptr;
+            T value = head->value;
+            delete head;
+            head = num;
+            return value;
+        } else {
+            throw std::string("Empty!");
+        }
+    }
+};
 
 
 
