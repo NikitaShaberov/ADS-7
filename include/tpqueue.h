@@ -23,14 +23,14 @@ class TPQueue {
 
  public:
   T pop() {
- ITEM* num = head->next;
- if (num) {
+ITEM* num = head->next;
+if (num) {
     num->last = nullptr;
     }
- T value = head->value;
- delete head;
- head = num;
- return value;
+T value = head->value;
+delete head;
+head = num;
+return value;
   }
 
 
